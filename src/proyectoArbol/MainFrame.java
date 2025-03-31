@@ -121,20 +121,28 @@ public class MainFrame extends JFrame {
         repaint();
     }
 
-    private void buscarNodo() {
-        String input = JOptionPane.showInputDialog(this, "Ingrese el valor a buscar:");
-        try {
-            int valor = Integer.parseInt(input);
-            boolean encontrado = arbol.buscar(valor);
-            String mensaje = encontrado ? "El valor " + valor + " existe en el árbol" 
-                                        : "El valor " + valor + " no fue encontrado";
+private void buscarNodo() {
+    String input = JOptionPane.showInputDialog(this, "Ingrese el valor a buscar:");
+    try {
+        int valor = Integer.parseInt(input);
+        boolean encontrado = arbol.buscar(valor);
+        if (encontrado) {
+            // Obtener la profundidad con la raíz en nivel 1
+            int nivel = arbol.buscarConProfundidad(valor);
+            String mensaje = "El valor " + valor + " existe en el árbol en el nivel: " + nivel;
             JOptionPane.showMessageDialog(this, mensaje);
-            treePanel.setNodoResaltado(encontrado ? valor : null);
-            treePanel.repaint();
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número válido");
+            treePanel.setNodoResaltado(valor);
+        } else {
+            JOptionPane.showMessageDialog(this, "El valor " + valor + " no fue encontrado");
+            treePanel.setNodoResaltado(null);
         }
+        treePanel.repaint();
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingrese un número válido");
     }
+}
+
+
 
     private void mostrarAltura() {
         JOptionPane.showMessageDialog(this, "Altura del árbol: " + arbol.altura());

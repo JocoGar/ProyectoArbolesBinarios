@@ -53,6 +53,25 @@ private boolean existeNodo(Nodo nodo, int valor) {
     public void eliminar(int valor) {
         raiz = eliminarRecursivo(raiz, valor);
     }
+// Método que retorna la profundidad (nivel) en el que se encuentra un valor en el árbol
+// Retorna -1 si no se encuentra. La raíz se considera en el nivel 1.
+public int buscarConProfundidad(int valor) {
+    return buscarConProfundidadRecursivo(raiz, valor, 1);
+}
+
+private int buscarConProfundidadRecursivo(Nodo nodo, int valor, int nivel) {
+    if (nodo == null) {
+        return -1; // No se encontró
+    }
+    if (nodo.valor == valor) {
+        return nivel;
+    } else if (valor < nodo.valor) {
+        return buscarConProfundidadRecursivo(nodo.izquierda, valor, nivel + 1);
+    } else {
+        return buscarConProfundidadRecursivo(nodo.derecha, valor, nivel + 1);
+    }
+}
+
 
     private Nodo eliminarRecursivo(Nodo nodo, int valor) {
         if (nodo == null) return null;
